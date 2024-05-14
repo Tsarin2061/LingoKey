@@ -10,13 +10,11 @@ class Keyboard():
     def __init__(self, callback):
         self.callback = callback
         pass
-        
-
 
     def on_press(self,key):
         shortcut_keys = [
-        {Key.cmd,KeyCode.from_char('a')} 
-       ]
+            {Key.ctrl_l, Key.alt_l}
+        ]
         try:
             self.pressed_keys.add(key)
         
@@ -33,3 +31,4 @@ class Keyboard():
             self.pressed_keys.remove(key)
         except KeyError:
             pass  
+
