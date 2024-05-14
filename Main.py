@@ -1,21 +1,19 @@
 from pynput.keyboard import Listener
-from keyboard import Keyboard
+from keyboard_handler import Keyboard
 from helper import get_clipboard, simulate_ctrl_c, past_into_clipboard,paste_text
 from translator import Translator
+import time
 
 def translate():
-    print("Hello")
     # paste_text("Text message")
     # return
     simulate_ctrl_c()
     text = get_clipboard()
-    print(f"З буфера обміну отримано {text}")
-    translator = Translator("auto", "en", text)
-    print(f"Запускаємо перекладач з текстом {text}")
+    translator = Translator(lang_from="uk", lang_to="en", text=text)
     translator.run()
-    # There is going to be translator 
-    # past_into_clipboard(text)
-    paste_text(translator.translation)
+    text = translator.translation
+    past_into_clipboard(text)
+    paste_text()
 
 
 keyboard = Keyboard(translate)

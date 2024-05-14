@@ -14,6 +14,7 @@ from random import randint
 
 import json
 import urllib.request as urllibRequest
+
 ssl._create_default_https_context = ssl._create_unverified_context
 # Each group has to be a class of possible breaking points for the writing script.
 # Usually this is the major syntax marks, such as:
@@ -94,4 +95,3 @@ class Translator():
 				self.error = True
 				return
 			self.translation += "".join(sentence["trans"] for sentence in response["sentences"])
-			print(self.translation)

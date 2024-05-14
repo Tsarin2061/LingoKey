@@ -6,3 +6,4 @@ __pycache__/
 
 # Other common ignores
 .DS_Store
+test.py

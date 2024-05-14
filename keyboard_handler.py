@@ -13,7 +13,8 @@ class Keyboard():
 
     def on_press(self,key):
         shortcut_keys = [
-            {Key.ctrl_l, Key.alt_l}
+            {Key.cmd, Key.shift_l},
+            {Key.ctrl,Key.shift_l}
         ]
         try:
             self.pressed_keys.add(key)

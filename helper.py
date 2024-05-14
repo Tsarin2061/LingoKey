@@ -1,5 +1,8 @@
 from pynput.keyboard import Key, Controller
 import pyperclip
+import keyboard
+import pyautogui
+import time
 
 
 def simulate_ctrl_c():
@@ -17,8 +20,11 @@ def get_clipboard():
 def past_into_clipboard(text):
     pyperclip.copy(text)
 
-def paste_text(text):
-    keyboard = Controller()
-    keyboard.type(text)
-    print(text)
-    
+def paste_text():
+    try:
+        # Use pyautogui to simulate pressing Ctrl+V to paste
+        pyautogui.hotkey('ctrl', 'v')
+        # Add a short delay to allow time for the paste operation
+        time.sleep(0.5)
+    except Exception as e:
+        print("Error:", e)
