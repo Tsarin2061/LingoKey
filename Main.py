@@ -5,13 +5,13 @@ from translator import Translator
 import time
 
 def translate():
-    # paste_text("Text message")
-    # return
     simulate_ctrl_c()
     text = get_clipboard()
+
     translator = Translator(lang_from="uk", lang_to="en", text=text)
     translator.run()
-    text = translator.translation
+    text = translator.translation + " "
+
     past_into_clipboard(text)
     paste_text()
 

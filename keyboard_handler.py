@@ -13,8 +13,7 @@ class Keyboard():
 
     def on_press(self,key):
         shortcut_keys = [
-            {Key.cmd, Key.shift_l},
-            {Key.ctrl,Key.shift_l}
+            {Key.cmd, KeyCode.from_char('j')},
         ]
         try:
             self.pressed_keys.add(key)
@@ -22,7 +21,9 @@ class Keyboard():
             for shortcut in shortcut_keys:
                 if all(k in self.pressed_keys for k in shortcut):
                     if time.time() - self.time_last_pressed < 1: return None
-                    self.time_last_pressed = time.time() 
+                    self.time_last_pressed = time.time()
+                    self.pressed_keys.remove(key)
+
                     self.callback()
         except AttributeError:
             pass

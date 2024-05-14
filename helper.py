@@ -2,15 +2,16 @@ from pynput.keyboard import Key, Controller
 import pyperclip
 import keyboard
 import pyautogui
-import time
+import Quartz
+from AppKit import NSPasteboard, NSPasteboardTypeString
 
 
 def simulate_ctrl_c():
     keyboard = Controller()
-    keyboard.press(Key.ctrl.value)
+    keyboard.press(Key.ctrl)
     keyboard.press('c')
     keyboard.release('c')
-    keyboard.release(Key.ctrl.value)
+    keyboard.release(Key.ctrl)
 
 def get_clipboard():
     # Get the text from the clipboard
@@ -20,11 +21,14 @@ def get_clipboard():
 def past_into_clipboard(text):
     pyperclip.copy(text)
 
+
 def paste_text():
-    try:
-        # Use pyautogui to simulate pressing Ctrl+V to paste
-        pyautogui.hotkey('ctrl', 'v')
-        # Add a short delay to allow time for the paste operation
-        time.sleep(0.5)
-    except Exception as e:
-        print("Error:", e)
+    # Get clipboard content
+    pb = NSPasteboard.generalPasteboard()
+    clipboard_content = pb.stringForType_(NSPasteboardTypeString)
+
+    # Convert clipboard content to an event
+    paste_event = Quartz.CGEventCreateKeyboardEvent(None, 9, True)
+    Quartz.CGEventSetFlags(paste_event, Quartz.kCGEventFlagMaskCommand)
+    Quartz.CGEventPost(Quartz.kCGAnnotatedSessionEventTap, paste_event)
+
