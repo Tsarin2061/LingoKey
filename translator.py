@@ -43,10 +43,11 @@ def splitChunks(text, chunksize):
 # Javanese: jw instead of jv
 langConversionDic = {'iw':'he', 'jw':'jv'}
 
-class Translator(threading.Thread):
+# class Translator(threading.Thread):
+class Translator():
 
 	def __init__(self, lang_from, lang_to, text, lang_swap=None, useMirror=False, chunksize=3000, *args, **kwargs):
-		super().__init__(*args, **kwargs)
+		# super().__init__(*args, **kwargs)
 		if lang_from != "auto" and lang_swap is not None:
 			raise RuntimeError("Unexpected arguments: langFrom={}, langTo={}, langSwap={}, {}".format(text, lang_from, lang_to, lang_swap))
 		self._stopEvent = threading.Event()
