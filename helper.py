@@ -2,16 +2,25 @@ from pynput.keyboard import Key, Controller
 import pyperclip
 import Quartz
 from AppKit import NSPasteboard, NSPasteboardTypeString
-
+import time
 
 def simulate_ctrl_c():
     keyboard = Controller()
 
-    keyboard.press(Key.ctrl)
-    keyboard.press("c")
+    # Press Command key
+    keyboard.press(Key.cmd)
+    time.sleep(0.1)  # Small delay to ensure the keypress is registered
 
-    keyboard.release("c")
-    keyboard.release(Key.ctrl)
+    # Press 'c' key
+    keyboard.press('c')
+
+    # Release 'c' key
+    keyboard.release('c')
+
+    # Release Command key
+    keyboard.release(Key.cmd)
+
+    print(get_clipboard())
 
 
 def get_clipboard():

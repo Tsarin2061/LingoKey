@@ -7,7 +7,6 @@ from translator import Translator
 def translate():
     simulate_ctrl_c()
     text = get_clipboard()
-
     translator = Translator(lang_from="uk", lang_to="en", text=text)
     translator.run()
     text = translator.translation + " "
