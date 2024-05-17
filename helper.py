@@ -28,10 +28,8 @@ def get_clipboard():
     clipboard_text = pyperclip.paste()
     return clipboard_text
 
-
 def past_into_clipboard(text):
     pyperclip.copy(text)
-
 
 def paste_text():
     # Convert clipboard content to an event

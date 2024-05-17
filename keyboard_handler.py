@@ -24,6 +24,8 @@ class Keyboard:
                     self.pressed_keys.remove(key)
 
                     self.callback()
+
+            print('done')
         except AttributeError:
             pass
 

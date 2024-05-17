@@ -63,6 +63,7 @@ class Translator:
         **kwargs
     ):
         # super().__init__(*args, **kwargs)
+        print(lang_from, lang_to)
         if lang_from != "auto" and lang_swap is not None:
             raise RuntimeError(
                 "Unexpected arguments: langFrom={}, langTo={}, langSwap={}, {}".format(
