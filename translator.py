@@ -1,9 +1,4 @@
-# encoding: utf-8
-#
-# Copyright (C) 2013 - 2024 Mesar Hameed <mhameed@src.gnome.org>, Beqa gozalishvili
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-
+import logging
 import os
 import re
 import sys
@@ -11,10 +6,10 @@ import ssl
 import threading
 from time import sleep
 from random import randint
-
 import json
 import urllib.request as urllibRequest
 ssl._create_default_https_context = ssl._create_unverified_context
+
 # Each group has to be a class of possible breaking points for the writing script.
 # Usually this is the major syntax marks, such as:
 # full stop, comma, exclaim, question, etc.
@@ -48,6 +43,7 @@ class Translator():
 
 	def __init__(self, lang_from, lang_to, text, lang_swap=None, useMirror=False, chunksize=3000, *args, **kwargs):
 		# super().__init__(*args, **kwargs)
+		logging.debug("Instant translate: lang_from=%s, lang_to=%s, lang_swap=%s"%(lang_from, lang_to, lang_swap))
 		if lang_from != "auto" and lang_swap is not None:
 			raise RuntimeError("Unexpected arguments: langFrom={}, langTo={}, langSwap={}, {}".format(text, lang_from, lang_to, lang_swap))
 		self._stopEvent = threading.Event()
@@ -64,9 +60,11 @@ class Translator():
 		self.firstChunk = True
 
 	def stop(self):
+		logging.debug("Stop translate")
 		self._stopEvent.set()
 
 	def run(self):
+		logging.debug("Start translate")
 		urlTemplate = "https://translate.googleapis.com/translate_a/single?client=gtx&sl={lang_from}&tl={lang_to}&dt=t&q={text}&dj=1"
 		if self.useMirror:
 			urlTemplate = "https://translate.googleapis.mirror.nvdadr.com/translate_a/single?client=gtx&sl={lang_from}&tl={lang_to}&dt=t&q={text}&dj=1"
@@ -81,7 +79,7 @@ class Translator():
 				response = json.load(self.opener.open(url))
 				self.lang_detected = response['src']
 				self.lang_detected = langConversionDic.get(self.lang_detected, self.lang_detected)
-#				log.info("firstChunk=%s, lang_from=%s, lang_detected=%s, lang_to=%s, lang_swap=%s"%(self.firstChunk, self.lang_from, self.lang_detected, self.lang_to, self.lang_swap))
+				logging.info("firstChunk=%s, lang_from=%s, lang_detected=%s, lang_to=%s, lang_swap=%s"%(self.firstChunk, self.lang_from, self.lang_detected, self.lang_to, self.lang_swap))
 				if self.firstChunk and self.lang_from == "auto" and self.lang_detected == self.lang_to and self.lang_swap is not None:
 					self.lang_to = self.lang_swap
 					self.firstChunk = False
@@ -89,9 +87,9 @@ class Translator():
 					response = json.load(self.opener.open(url))
 			except Exception as e:
 				# We have probably been blocked, so stop trying to translate.
-#				log.exception("Instant translate: Can not translate text '%s'" %chunk)
+				logging.error("Instant translate: Can not translate text '%s'" %chunk)
 #				raise e
 				self.error = True
 				return
 			self.translation += "".join(sentence["trans"] for sentence in response["sentences"])
-			print(self.translation)
+			logging.debug(self.translation)
