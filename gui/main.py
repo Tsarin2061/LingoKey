@@ -1,4 +1,3 @@
-import sys
 from PyQt5.QtWidgets import QApplication, QComboBox, QMainWindow, QPushButton, QVBoxLayout, QWidget, QSizePolicy
 from PyQt5.QtCore import Qt
 from languages import langcodes
@@ -44,7 +43,3 @@ class MainWindow(QMainWindow):
         print(f"Selected languages: {lang1} and {lang2}")
 
 
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-sys.exit(app.exec_())
