@@ -1,5 +1,6 @@
 import logging
 from PyQt5.QtWidgets import (
+    QApplication,
     QComboBox,
     QMainWindow,
     QPushButton,
