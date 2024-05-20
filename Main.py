@@ -7,6 +7,7 @@ from gui.main import MainWindow
 from helper import get_clipboard, past_into_clipboard
 from translator import Translator
 from config import config
+from gui.languages import langcodes
 from hot_keys_on_platforms import hot_keys_on_platform
 
 
@@ -26,7 +27,7 @@ def translate():
     keyboard.send(hot_keys_on_platform["paste"])
 
 app = QApplication(sys.argv)
-main_window = MainWindow()
+main_window = MainWindow(langcodes = langcodes, config = config)
 main_window.show()
 
 keyboard.add_hotkey(hot_keys_on_platform["translate"], translate, timeout=2)
