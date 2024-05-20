@@ -1,6 +1,7 @@
 import time
 import logging
 import keyboard
+import sys
 from PyQt5.QtWidgets import QApplication
 from gui.main import MainWindow
 from helper import get_clipboard, past_into_clipboard
@@ -13,23 +14,26 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def translate():
-    logging.debug('translate')
+    logging.debug("translate")
     keyboard.send(hot_keys_on_platform["copy"])
     time.sleep(0.05)
     text = get_clipboard()
-    translator = Translator(config.get("from_language"), config.get("to_language"), text)
+    translator = Translator(
+        config.get("from_language"), config.get("to_language"), text
+    )
     translator.run()
     past_into_clipboard(translator.translation)
     keyboard.send(hot_keys_on_platform["paste"])
 
-import sys
 app = QApplication(sys.argv)
 main_window = MainWindow()
-def open_settings():
-    main_window.show()
-    logging.debug('open_settings')
-
+main_window.show()
 
 keyboard.add_hotkey(hot_keys_on_platform["translate"], translate, timeout=2)
-keyboard.add_hotkey('ctrl+alt+s', open_settings, timeout=2)
-keyboard.wait()
+
+# I commented text below, becasuse I did not get the purpose of it
+# function "open setting is also deleted"
+# keyboard.add_hotkey('cmd+m', open_settings, timeout=2)
+# keyboard.wait()
+
+sys.exit(app.exec_())

@@ -13,12 +13,12 @@ class Config:
     A class that provides an interface for interacting with a configuration file
     For interaction, it is enough to use the get and set methods
     """
-    
+
     _FILE_NAME = "config.json"
-    
+
     def __init__(self):
         try:
-            self.data = self._load()        
+            self.data = self._load()
         except:
             logging.debug("Doesn't exist config file")
             self.data = {}
@@ -45,5 +45,6 @@ class Config:
         data = json.load(file)
         file.close()
         return data
+
 
 config = Config()

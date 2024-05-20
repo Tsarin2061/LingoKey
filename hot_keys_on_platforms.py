@@ -7,10 +7,10 @@ hot_keys_on_platforms = {
         "paste": "ctrl+v",
     },
     "Darwin": {
-        "translate": "cmd+shift+t",
+        "translate": "cmd+j",
         "copy": "cmd+c",
         "paste": "cmd+v",
-    }
+    },
 }
 
 hot_keys_on_platform = hot_keys_on_platforms.get(platform.system())
