@@ -2,8 +2,8 @@ import platform
 
 hot_keys_on_platforms = {
     "Windows": {
-        "translate": "ctrl+shift+t",
-        "copy": "ctrl+c",
+        "translate": "ctrl+t",
+        "copy": "ctrl+с",
         "paste": "ctrl+v",
     },
     "Darwin": {

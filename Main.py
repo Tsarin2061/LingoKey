@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 def translate():
     logging.debug("translate")
     keyboard.send(hot_keys_on_platform["copy"])
-    time.sleep(0.05)
+    time.sleep(0.1)
     text = get_clipboard()
     translator = Translator(
         config.get("from_language"), config.get("to_language"), text
