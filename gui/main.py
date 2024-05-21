@@ -99,7 +99,7 @@ class MainWindow(QMainWindow):
     def on_submit(self):
         logging.debug("Saving settings")
         from_lang = get_lang_code_by_name(self.from_lang_combo_box.currentText())
-        to_lang = languages.get(self.to_lang_combo_box.currentText())
+        to_lang = get_lang_code_by_name(self.to_lang_combo_box.currentText())
         self.config.set(self.CONFIG_FROM_LANGUAGE, from_lang)
         self.config.set(self.CONFIG_TO_LANGUAGE, to_lang)
         logging.debug(f"Selected languages: {from_lang} and {to_lang}")
