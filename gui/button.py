@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QPushButton, QMainWindow
+from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtCore import Qt
 
 class Button(QPushButton):
@@ -7,9 +7,12 @@ class Button(QPushButton):
         self.setAccessibleName("Change Language button")
         self.setAccessibleDescription("This button submits the form with custom behavior.")
         
+        self.setFocusPolicy(Qt.StrongFocus)  # Ensure the button can receive keyboard focus
         self.clicked.connect(self.on_click)
+
     def keyPressEvent(self, event):
         if event.key() in (Qt.Key_Return, Qt.Key_Enter, Qt.Key_Space):
+            
             self.click()
         else:
             super().keyPressEvent(event)

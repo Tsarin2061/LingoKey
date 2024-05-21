@@ -3,12 +3,12 @@ from PyQt5.QtWidgets import (
     QApplication,
     QComboBox,
     QMainWindow,
-    QPushButton,
     QVBoxLayout,
     QWidget,
     QSizePolicy,
 )
 from .languages import get_lang_code_by_name, languages
+from .button import Button
 
 
 class MainWindow(QMainWindow):
@@ -38,18 +38,18 @@ class MainWindow(QMainWindow):
         color: #FFFFFF;
         selection-background-color: #5E5E5E;
     }
-    QPushButton {
+    Button {
         background-color: #4B8F8C;
         color: #FFFFFF;
         border: 1px solid #4B8F8C;
         padding: 5px 10px;
         border-radius: 5px;
     }
-    QPushButton:hover {
+    Button:hover {
         background-color: #77A1A0;
         border-color: #77A1A0;
     }
-    QPushButton:pressed {
+    Button:pressed {
         background-color: #3A7B78;
         border-color: #3A7B78;
     }
@@ -92,8 +92,9 @@ class MainWindow(QMainWindow):
         return combo_box
 
     def create_button(self, text, callback):
-        button = QPushButton(text, self)
+        button = Button(text, self)
         button.clicked.connect(callback)
+
         return button
 
     def on_submit(self):
