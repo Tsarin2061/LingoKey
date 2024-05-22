@@ -3,10 +3,7 @@ from PyQt5.QtCore import Qt
 
 class Button(QPushButton):
     def __init__(self, text, parent=None):
-        super().__init__(text, parent)
-        self.setAccessibleName("Change Language button")
-        self.setAccessibleDescription("This button submits the form with custom behavior.")
-        
+        super().__init__(text, parent)        
         self.setFocusPolicy(Qt.StrongFocus)  # Ensure the button can receive keyboard focus
         self.clicked.connect(self.on_click)
 
