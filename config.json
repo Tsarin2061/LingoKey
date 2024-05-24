@@ -1,5 +1,11 @@
 {
     "from_language": "auto",
-    "to_language": "gl",
-    "abr": {}
+    "to_language": "zh-CN",
+    "abr": {
+        "lv": "Lev",
+        "fku": "fuck you ",
+        "ilovelev": "I love watching movies with other guys eventhough my bf does mind",
+        "укр": "Ukrainian",
+        "new": "new abreviation"
+    }
 }

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import logging
 import keyboard
@@ -9,11 +10,11 @@ from helper import get_clipboard, past_into_clipboard
 from translator import Translator
 from config import config
 from gui.languages import langcodes
+from abbreviation_handler import abbreviation_handler
 from hot_keys_on_platforms import hot_keys_on_platform
 
 
 logging.basicConfig(level=logging.DEBUG)
-
 
 def translate():
     logging.debug("translate")
@@ -26,6 +27,8 @@ def translate():
     translator.run()
     past_into_clipboard(translator.translation)
     keyboard.send(hot_keys_on_platform["paste"])
+
+abbreviation_handler()
 
 app = QApplication(sys.argv)
 abbreviations_window = AbbreviationsWindow()

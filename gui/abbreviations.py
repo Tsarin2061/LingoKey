@@ -9,11 +9,12 @@ from PyQt5.QtWidgets import (
     QComboBox,
     QHBoxLayout,
     QScrollArea,
-    QSizePolicy
+    QSizePolicy,
 )
 from .button import Button
 import logging
 from config import config
+from abbreviation_handler import abbreviation_handler
 
 class AbbreviationsWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -44,19 +45,21 @@ class AbbreviationsWindow(QMainWindow):
         self.entry_layout = QHBoxLayout()
         self.abbreviation_input = QLineEdit()
         self.abbreviation_input.setPlaceholderText("Enter abbreviation")
-        self.abbreviation_input.setStyleSheet("background-color: #FFFFFF; color: #000000;")
-        
+        self.abbreviation_input.setStyleSheet(
+            "background-color: #FFFFFF; color: #000000;"
+        )
+
         self.text_input = QLineEdit()
         self.text_input.setPlaceholderText("Enter text")
         self.text_input.setStyleSheet("background-color: #FFFFFF; color: #000000;")
-        
+
         self.add_button = Button("Add")
         self.add_button.clicked.connect(self.set_config_abbreviations)
-        
+
         self.entry_layout.addWidget(self.abbreviation_input)
         self.entry_layout.addWidget(self.text_input)
         self.entry_layout.addWidget(self.add_button)
-        
+
         self.main_layout.addLayout(self.entry_layout)
 
         # Initialize rows container
@@ -83,20 +86,20 @@ class AbbreviationsWindow(QMainWindow):
         delete_button.clicked.connect(lambda: self.delete_row(row_widget, abbreviation))
         row_layout.addWidget(delete_button)
 
-        return row_widget        
+        return row_widget
 
     def set_config_abbreviations(self, abbreviation):
         abbreviation = self.abbreviation_input.text()
         text = self.text_input.text()
-        
-        dictionary = self.config.get("abr")  
+
+        dictionary = self.config.get("abr")
         if abbreviation and text:
             dictionary[abbreviation] = text
             self.config.set("abr", dictionary)
             self.abbreviation_input.clear()
             self.text_input.clear()
             self.update_window()  # Call the update_window method after initializing UI
-        
+
     def update_window(self):
         # Clear existing rows
         for i in reversed(range(self.scroll_layout.count())):
@@ -113,7 +116,7 @@ class AbbreviationsWindow(QMainWindow):
 
             self.scroll_layout.addWidget(row_widget)
             self.rows.append(row_widget)
-
+        
 
     def delete_row(self, row_widget, abbreviation):
         self.scroll_layout.removeWidget(row_widget)
@@ -125,5 +128,3 @@ class AbbreviationsWindow(QMainWindow):
             entire_dict = self.config.get("abr")
             del entire_dict[abbreviation]
             self.config.set("abr", entire_dict)
-
-

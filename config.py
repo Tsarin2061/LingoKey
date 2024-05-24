@@ -35,7 +35,7 @@ class Config:
 
     def _save(self):
         file = open(self._FILE_NAME, "w")
-        json.dump(self.data, file, indent=4)
+        json.dump(self.data, file, indent=4,ensure_ascii=False)
         file.close()
         logging.debug("Saved config")
 

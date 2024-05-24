@@ -57,15 +57,13 @@ class MainWindow(QMainWindow):
     }
     """
 
-    def __init__(self,abbreviations_window, parent=None):
+    def __init__(self, abbreviations_window, parent=None):
         super().__init__()
         self.langcodes = langcodes
         self.config = config
         self.abbreviations_window = abbreviations_window
 
         self.init_ui()
-
-
 
     def init_ui(self):
         self.setWindowTitle("LingoKey")
@@ -87,11 +85,9 @@ class MainWindow(QMainWindow):
         self.button = self.create_button("Save", self.on_submit)
         layout.addWidget(self.button)
 
-
         self.abbreviations_button = Button("Open Abbreviations")
         self.abbreviations_button.clicked.connect(self.show_abbreviations_window)
         layout.addWidget(self.abbreviations_button)
-
 
         self.shortcuts_enabled = True
 
@@ -116,7 +112,5 @@ class MainWindow(QMainWindow):
         self.config.set(self.CONFIG_TO_LANGUAGE, to_lang)
         logging.debug(f"Selected languages: {from_lang} and {to_lang}")
 
-
     def show_abbreviations_window(self):
         self.abbreviations_window.show()
-
