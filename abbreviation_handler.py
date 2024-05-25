@@ -1,10 +1,12 @@
 import keyboard
 from config import config
 
-def abbreviation_handler():
-    abr_text = config.get('abr')
-    for abr, text in abr_text.items():
+def load_abbreviation():
+    for abr, text in config.get('abr').items():
         keyboard.add_abbreviation(abr, text)
 
+def add_abbreviation(abbreviation, value):
+    keyboard.add_abbreviation(abbreviation, value)    
 
-
+def remove_abbreviation(abbreviation):
+    keyboard.remove_abbreviation(abbreviation)

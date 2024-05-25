@@ -60,7 +60,6 @@ class MainWindow(QMainWindow):
     def __init__(self, abbreviations_window, parent=None):
         super().__init__()
         self.langcodes = langcodes
-        self.config = config
         self.abbreviations_window = abbreviations_window
 
         self.init_ui()
@@ -74,11 +73,11 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout(central_widget)
 
-        from_lang = languages.get(self.config.get(self.CONFIG_FROM_LANGUAGE))
+        from_lang = languages.get(config[self.CONFIG_FROM_LANGUAGE])
         self.from_lang_combo_box = self.create_combo_box(from_lang)
         layout.addWidget(self.from_lang_combo_box)
 
-        to_lang = languages.get(self.config.get(self.CONFIG_TO_LANGUAGE))
+        to_lang = languages.get(config[self.CONFIG_TO_LANGUAGE])
         self.to_lang_combo_box = self.create_combo_box(to_lang)
         layout.addWidget(self.to_lang_combo_box)
 
@@ -108,8 +107,8 @@ class MainWindow(QMainWindow):
         logging.debug("Saving settings")
         from_lang = get_lang_code_by_name(self.from_lang_combo_box.currentText())
         to_lang = get_lang_code_by_name(self.to_lang_combo_box.currentText())
-        self.config.set(self.CONFIG_FROM_LANGUAGE, from_lang)
-        self.config.set(self.CONFIG_TO_LANGUAGE, to_lang)
+        config[self.CONFIG_FROM_LANGUAGE] = from_lang
+        config[self.CONFIG_TO_LANGUAGE] = to_lang
         logging.debug(f"Selected languages: {from_lang} and {to_lang}")
 
     def show_abbreviations_window(self):

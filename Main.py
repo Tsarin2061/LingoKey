@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 import time
 import logging
-import keyboard
 import sys
+import keyboard
 from PyQt5.QtWidgets import QApplication
-from gui.settings import MainWindow
-from gui.abbreviations import AbbreviationsWindow
+from gui import AbbreviationsWindow, MainWindow
 from helper import get_clipboard, past_into_clipboard
 from translator import Translator
 from config import config
-from gui.languages import langcodes
-from abbreviation_handler import abbreviation_handler
+from abbreviation_handler import load_abbreviation
 from hot_keys_on_platforms import hot_keys_on_platform
 
 
@@ -18,17 +16,19 @@ logging.basicConfig(level=logging.DEBUG)
 
 def translate():
     logging.debug("translate")
+    time.sleep(0.2)
     keyboard.send(hot_keys_on_platform["copy"])
     time.sleep(0.1)
     text = get_clipboard()
     translator = Translator(
-        config.get("from_language"), config.get("to_language"), text
+        config["from_language"], config["to_language"], text
     )
     translator.run()
     past_into_clipboard(translator.translation)
+    time.sleep(0.1)
     keyboard.send(hot_keys_on_platform["paste"])
 
-abbreviation_handler()
+load_abbreviation()
 
 app = QApplication(sys.argv)
 abbreviations_window = AbbreviationsWindow()

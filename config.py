@@ -5,37 +5,42 @@ import json
 spec = {
     "from_language": "auto",
     "to_language": "en",
+    "abr": {}
 }
 
 
-class Config:
+class Config(dict):
     """
     A class that provides an interface for interacting with a configuration file
     For interaction, it is enough to use the get and set methods
     """
 
-    _FILE_NAME = "config.json"
 
-    def __init__(self):
+    _FILE_NAME = "config.json"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         try:
-            self.data = self._load()
+            data = self._load()
         except:
             logging.debug("Doesn't exist config file")
-            self.data = {}
-        self.data = {**spec, **self.data}
+            data = {}
+        self.update({**spec, **data})
 
-    def get(self, key: str):
-        logging.debug(f"Getting {key} from config")
-        return self.data.get(key, None)
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        self._save()
 
-    def set(self, key: str, value: str):
-        logging.debug(f"Setting {key} to {value} in config")
-        self.data[key] = value
+    def __delitem__(self, key):
+        super().__delitem__(key)
+        self._save()
+
+    def update(self, *args, **kwargs):
+        super().update(*args, **kwargs)
         self._save()
 
     def _save(self):
         file = open(self._FILE_NAME, "w")
-        json.dump(self.data, file, indent=4,ensure_ascii=False)
+        json.dump(self, file, indent=4,ensure_ascii=False)
         file.close()
         logging.debug("Saved config")
 
@@ -46,5 +51,7 @@ class Config:
         file.close()
         return data
 
+        # Ваша додаткова функція
+        print("Зміни у словнику виконано")
 
 config = Config()

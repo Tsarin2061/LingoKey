@@ -14,12 +14,11 @@ from PyQt5.QtWidgets import (
 from .button import Button
 import logging
 from config import config
-from abbreviation_handler import abbreviation_handler
+from abbreviation_handler import load_abbreviation, add_abbreviation, remove_abbreviation
 
 class AbbreviationsWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.config = config
         self.init_ui()
         self.update_window()
 
@@ -54,7 +53,7 @@ class AbbreviationsWindow(QMainWindow):
         self.text_input.setStyleSheet("background-color: #FFFFFF; color: #000000;")
 
         self.add_button = Button("Add")
-        self.add_button.clicked.connect(self.set_config_abbreviations)
+        self.add_button.clicked.connect(self.set_abbreviations)
 
         self.entry_layout.addWidget(self.abbreviation_input)
         self.entry_layout.addWidget(self.text_input)
@@ -88,14 +87,12 @@ class AbbreviationsWindow(QMainWindow):
 
         return row_widget
 
-    def set_config_abbreviations(self, abbreviation):
+    def set_abbreviations(self, abbreviation):
         abbreviation = self.abbreviation_input.text()
         text = self.text_input.text()
-
-        dictionary = self.config.get("abr")
         if abbreviation and text:
-            dictionary[abbreviation] = text
-            self.config.set("abr", dictionary)
+            config["abr"][abbreviation] = text
+            add_abbreviation(abbreviation, text)
             self.abbreviation_input.clear()
             self.text_input.clear()
             self.update_window()  # Call the update_window method after initializing UI
@@ -108,7 +105,7 @@ class AbbreviationsWindow(QMainWindow):
             widget_to_remove.setParent(None)
 
         # Read from config and add new rows
-        read_dict = self.config.get("abr")
+        read_dict = config["abr"]
         for abr, txt in read_dict.items():
             row_widget = self.create_row_widget(abr, txt)
             self.scroll_layout.addWidget(row_widget)
@@ -124,7 +121,6 @@ class AbbreviationsWindow(QMainWindow):
         row_widget.setParent(None)  # Remove the widget from the layout and delete it
 
         # Also remove the abbreviation from the config
-        if abbreviation in self.config.get("abr"):
-            entire_dict = self.config.get("abr")
-            del entire_dict[abbreviation]
-            self.config.set("abr", entire_dict)
+        if abbreviation in config["abr"]:
+            del config["abr"][abbreviation]
+            remove_abbreviation(abbreviation)
