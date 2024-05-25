@@ -270,4 +270,5 @@ languages = {
 
 def get_lang_code_by_name(lang):
     for lang_code, lang_name in languages.items():
-        if lang_name == lang: return lang_code
+        if lang_name == lang:
+            return lang_code
