@@ -92,6 +92,7 @@ class AbbreviationsWindow(QMainWindow):
         text = self.text_input.text()
         if abbreviation and text:
             config["abr"][abbreviation] = text
+            config.save()
             add_abbreviation(abbreviation, text)
             self.abbreviation_input.clear()
             self.text_input.clear()
@@ -105,8 +106,7 @@ class AbbreviationsWindow(QMainWindow):
             widget_to_remove.setParent(None)
 
         # Read from config and add new rows
-        read_dict = config["abr"]
-        for abr, txt in read_dict.items():
+        for abr, txt in config["abr"].items():
             row_widget = self.create_row_widget(abr, txt)
             self.scroll_layout.addWidget(row_widget)
             self.rows.append(row_widget)
@@ -123,4 +123,5 @@ class AbbreviationsWindow(QMainWindow):
         # Also remove the abbreviation from the config
         if abbreviation in config["abr"]:
             del config["abr"][abbreviation]
+            config.save()
             remove_abbreviation(abbreviation)

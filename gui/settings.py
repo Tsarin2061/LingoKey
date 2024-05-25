@@ -109,6 +109,7 @@ class MainWindow(QMainWindow):
         to_lang = get_lang_code_by_name(self.to_lang_combo_box.currentText())
         config[self.CONFIG_FROM_LANGUAGE] = from_lang
         config[self.CONFIG_TO_LANGUAGE] = to_lang
+        config.save()
         logging.debug(f"Selected languages: {from_lang} and {to_lang}")
 
     def show_abbreviations_window(self):

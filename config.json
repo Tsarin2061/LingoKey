@@ -1,5 +1,7 @@
 {
     "from_language": "uk",
     "to_language": "en",
-    "abr": {}
+    "abr": {
+        "123": "123456789"
+    }
 }
