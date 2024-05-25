@@ -12,7 +12,7 @@ spec = {
 class Config(dict):
     """
     A class that provides an interface for interacting with a configuration file
-    For interaction, it is enough to use the get and set methods
+    # You can work with it like a regular dictionary
     """
 
 
