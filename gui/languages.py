@@ -155,7 +155,7 @@ langcodes = [
 ]
 
 languages = {
-    "auto": "Automatic",
+    # "auto": "Automatic",
     "af": "Afrikaans",
     "am": "Amharic",
     "ar": "Arabic",
