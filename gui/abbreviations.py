@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import (
 from .button import Button
 import logging
 from config import config
-from abbreviation_handler import load_abbreviation, add_abbreviation, remove_abbreviation
+from handlers import load_abbreviation, add_abbreviation, remove_abbreviation
 
 class AbbreviationsWindow(QMainWindow):
     def __init__(self, parent=None):

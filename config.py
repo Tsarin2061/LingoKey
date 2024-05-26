@@ -3,9 +3,8 @@ import json
 
 
 spec = {
-    "from_language": "auto",
-    "to_language": "en",
-    "abr": {}
+    "abr": {},
+    "languages": []
 }
 
 
@@ -14,7 +13,6 @@ class Config(dict):
     A class that provides an interface for interacting with a configuration file
     You can work with it like a regular dictionary
     """
-
 
     _FILE_NAME = "config.json"
     def __init__(self, *args, **kwargs):
@@ -25,18 +23,6 @@ class Config(dict):
             logging.debug("Doesn't exist config file")
             data = {}
         self.update({**spec, **data})
-
-    def __setitem__(self, key, value):
-        super().__setitem__(key, value)
-        self.save()
-
-    def __delitem__(self, key):
-        super().__delitem__(key)
-        self.save()
-
-    def update(self, *args, **kwargs):
-        super().update(*args, **kwargs)
-        self.save()
 
     def save(self):
         file = open(self._FILE_NAME, "w")

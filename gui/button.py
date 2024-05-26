@@ -8,7 +8,7 @@ class Button(QPushButton):
         self.setFocusPolicy(
             Qt.StrongFocus
         )  # Ensure the button can receive keyboard focus
-        self.clicked.connect(self.on_click)
+        # self.clicked.connect(self.on_click)
 
     def keyPressEvent(self, event):
         if event.key() in (Qt.Key_Return, Qt.Key_Enter, Qt.Key_Space):
@@ -17,5 +17,5 @@ class Button(QPushButton):
         else:
             super().keyPressEvent(event)
 
-    def on_click(self):
-        print("Button clicked!")
+    # def on_click(self):
+        # print("Button clicked!")

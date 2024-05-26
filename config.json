@@ -1,7 +1,20 @@
 {
-    "from_language": "uk",
-    "to_language": "en",
-    "abr": {
-        "123": "123456789"
-    }
+    "abr": {},
+    "languages": [
+        {
+            "from_language": "en",
+            "to_language": "uk",
+            "hot_key": "ctrl+t"
+        },
+        {
+            "from_language": "uk",
+            "to_language": "pl",
+            "hot_key": "ctrl+shift+2"
+        },
+        {
+            "from_language": "es",
+            "to_language": "uk",
+            "hot_key": "ctrl+shift+4"
+        }
+    ]
 }
