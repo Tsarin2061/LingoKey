@@ -2,19 +2,14 @@
     "abr": {},
     "languages": [
         {
-            "from_language": "en",
-            "to_language": "uk",
-            "hot_key": "ctrl+t"
-        },
-        {
             "from_language": "uk",
-            "to_language": "pl",
-            "hot_key": "ctrl+shift+2"
+            "to_language": "en",
+            "hot_key": "ctrl+shift+1"
         },
         {
             "from_language": "es",
             "to_language": "uk",
-            "hot_key": "ctrl+shift+4"
+            "hot_key": "ctrl+shift+2"
         }
     ]
 }

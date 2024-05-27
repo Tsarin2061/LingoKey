@@ -22,16 +22,16 @@ class Button(QPushButton):
 
 
 class TableWidget(QTableWidget):
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+        self.parent = parent
+        self.setEditTriggers(self.NoEditTriggers)
+    
     def keyPressEvent(self, event):
-        key = event.key()
-        if key == Qt.Key_Tab:
-            print("Натиснено", key)
-            if event.modifiers() & Qt.ShiftModifier:
-                widget = self.focusNextPrevChild(False)
-            else:
-                widget = self.focusNextPrevChild(True)  # Перемістити фокус на наступний віджет
-            if widget:
-                widget.setFocus()
-                return
-        super().keyPressEvent(event)  # Для всіх інших клавіш викликається стандартна обробка
+        if int(event.key()) == 16777218:
+            self.parent.focusNextPrevChild(False)
+        elif int(event.key()) == 16777217:
+            self.parent.focusNextPrevChild(True)
+        else:
+            super().keyPressEvent(event)
 

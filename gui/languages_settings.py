@@ -63,25 +63,27 @@ class LanguagesWindow(QWidget):
         self.initUI()
 
     def initUI(self):
-        # Створення таблиці
-        self.table = QTableWidget(self)
+        # Button to open the input window
+        self.inputButton = Button("Add language", self)
+        self.inputButton.clicked.connect(self.openInputDialog)
+        
+        # Creating a table
+        self.table = TableWidget(self)
         self.table.setColumnCount(3)
+        self.table.setEditTriggers(self.table.NoEditTriggers)
         for item in config["languages"]:
             self.addRow((item["from_language"], item["to_language"], item["hot_key"]))
         self.table.setHorizontalHeaderLabels(["From", "To", "Hot key"])
 
-        # Button to open the input window
-        inputButton = Button("Add language", self)
-        inputButton.clicked.connect(self.openInputDialog)
         # Button to delete table row
-        delete_button = Button("Delete", self)
-        delete_button.clicked.connect(self.delete_row)
+        self.delete_button = Button("Delete", self)
+        self.delete_button.clicked.connect(self.delete_row)
 
         # Розташування таблиці та кнопки у віджеті
         layout = QVBoxLayout()
-        layout.addWidget(inputButton)
+        layout.addWidget(self.inputButton)
         layout.addWidget(self.table)
-        layout.addWidget(delete_button)
+        layout.addWidget(self.delete_button)
         self.setLayout(layout)
 
         # Налаштування вікна
