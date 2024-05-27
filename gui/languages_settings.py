@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetItem, QVBoxLayout, QPushButton, QHBoxLayout, QLineEdit, QDialog, QComboBox, QSizePolicy, QMessageBox
 from .languages import get_lang_code_by_name, languages
-from .button import Button
+from .button import Button, TableWidget
 from config import config
 from handlers import add_hot_key_to_translator
 
@@ -57,7 +57,7 @@ class InputDialog(QDialog):
         return combo_box
 
 
-class MainWindow(QWidget):
+class LanguagesWindow(QWidget):
     def __init__(self, abbreviations_window=None):
         super().__init__()
         self.initUI()
@@ -70,19 +70,23 @@ class MainWindow(QWidget):
             self.addRow((item["from_language"], item["to_language"], item["hot_key"]))
         self.table.setHorizontalHeaderLabels(["From", "To", "Hot key"])
 
-        # Кнопка для відкриття вікна введення
+        # Button to open the input window
         inputButton = Button("Add language", self)
         inputButton.clicked.connect(self.openInputDialog)
+        # Button to delete table row
+        delete_button = Button("Delete", self)
+        delete_button.clicked.connect(self.delete_row)
 
         # Розташування таблиці та кнопки у віджеті
         layout = QVBoxLayout()
         layout.addWidget(inputButton)
         layout.addWidget(self.table)
+        layout.addWidget(delete_button)
         self.setLayout(layout)
 
         # Налаштування вікна
         self.setGeometry(300, 300, 400, 250)
-        self.setWindowTitle('Головне вікно')
+        self.setWindowTitle('LingoKey')
 
     def openInputDialog(self):
         dialog = InputDialog(self)
@@ -96,6 +100,26 @@ class MainWindow(QWidget):
         self.table.setItem(row_count, 0, QTableWidgetItem(inputs[0]))
         self.table.setItem(row_count, 1, QTableWidgetItem(inputs[1]))
         self.table.setItem(row_count, 2, QTableWidgetItem(inputs[2]))
+
+    def delete_row(self):
+        selected_row = self.table.currentRow()
+        if selected_row >= 0:
+            rowData = []
+            for column in range(self.table.columnCount()):
+                item = self.table.item(selected_row, column)
+                if item is not None:
+                    rowData.append(item.text())
+                else:
+                    rowData.append(None)
+            self.delete_lang_from_config(rowData)
+            self.table.removeRow(selected_row)
+
+    def delete_lang_from_config(self, data: list):
+        for item in config["languages"]:
+            if item["from_language"] == data[0] and item["to_language"] == data[1] and item["hot_key"] == data[2]:
+                config["languages"].remove(item)
+                config.save()
+                break
 
     def showError(self, text):
         # Створення та налаштування вікна з помилкою
