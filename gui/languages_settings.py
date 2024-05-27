@@ -43,6 +43,7 @@ class InputDialog(QDialog):
                 add_hot_key_to_translator(item_to_config)
             except Exception as e:
                 self.parent.showError("Failed to add hot key", "Error", QMessageBox.Critical)
+                return False
             item_to_config = {
                 "from_language": from_lang,
                 "to_language": to_lang,

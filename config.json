@@ -15,11 +15,6 @@
             "from_language": "es",
             "to_language": "uk",
             "hot_key": "ctrl+shift+2"
-        },
-        {
-            "from_language": "af",
-            "to_language": "af",
-            "hot_key": "123="
         }
     ]
 }
