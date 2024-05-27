@@ -1,9 +1,9 @@
-import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetItem, QVBoxLayout, QPushButton, QHBoxLayout, QLineEdit, QDialog, QComboBox, QSizePolicy, QMessageBox
 from .languages import get_lang_code_by_name, languages
-from .button import Button, TableWidget
+from .custom_widgets import Button, TableWidget
 from config import config
 from handlers import add_hot_key_to_translator
+from utilities import is_exists_language_configuration, is_hot_key_in_list_languages
 
 class InputDialog(QDialog):
     def __init__(self, parent=None):
@@ -31,22 +31,31 @@ class InputDialog(QDialog):
         self.setLayout(layout)
 
     def save(self):
-        if self.hot_key.text() == "":
+        from_lang, to_lang, hot_key = self.getInputs()
+        if hot_key == "":
             self.parent.showError("Enter hot key")
+        elif is_exists_language_configuration(from_lang, to_lang, hot_key):
+            self.parent.showError("Language configuration already exists", "Warning", QMessageBox.Warning) 
+        elif is_hot_key_in_list_languages(hot_key):
+            self.parent.showError("Hot key already exists", "Warning", QMessageBox.Warning)
         else:
+            try:
+                add_hot_key_to_translator(item_to_config)
+            except Exception as e:
+                self.parent.showError("Failed to add hot key", "Error", QMessageBox.Critical)
+            item_to_config = {
+                "from_language": from_lang,
+                "to_language": to_lang,
+                "hot_key": hot_key
+            }
+            config["languages"].append(item_to_config)
+            config.save()
             self.accept()
+    
     def getInputs(self):
         from_lang = get_lang_code_by_name(self.from_lang.currentText())
         to_lang = get_lang_code_by_name(self.to_lang.currentText())
         hot_key = self.hot_key.text()
-        item_to_config = {
-            "from_language": from_lang,
-            "to_language": to_lang,
-            "hot_key": hot_key
-        }
-        config["languages"].append(item_to_config)
-        config.save()
-        add_hot_key_to_translator(item_to_config)
         return from_lang, to_lang, hot_key
 
     def create_combo_box(self, current_text):
@@ -123,13 +132,13 @@ class LanguagesWindow(QWidget):
                 config.save()
                 break
 
-    def showError(self, text):
+    def showError(self, text: str, title: str = "Error", icon = QMessageBox.Critical):
         # Створення та налаштування вікна з помилкою
         msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
+        msg.setIcon(icon)
         msg.setText(text)
         # msg.setInformativeText(text)
-        msg.setWindowTitle("Error")
+        msg.setWindowTitle(title)
         # msg.setDetailedText("Тут ви можете додати детальний опис помилки.")
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()  # Відображення вікна

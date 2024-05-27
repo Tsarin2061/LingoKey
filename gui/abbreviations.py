@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (
     QScrollArea,
     QSizePolicy,
 )
-from .button import Button
+from .custom_widgets import Button
 import logging
 from config import config
 from handlers import load_abbreviation, add_abbreviation, remove_abbreviation
