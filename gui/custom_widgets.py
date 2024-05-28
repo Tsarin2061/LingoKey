@@ -5,20 +5,16 @@ from PyQt5.QtWidgets import QTableWidget, QApplication, QTableWidgetItem, QWidge
 class Button(QPushButton):
     def __init__(self, text, parent=None):
         super().__init__(text, parent)
-        self.setFocusPolicy(
-            Qt.StrongFocus
-        )  # Ensure the button can receive keyboard focus
-        # self.clicked.connect(self.on_click)
+        # Ensure the button can receive keyboard focus
+        # self.setFocusPolicy(
+            # Qt.StrongFocus
+        # ) 
 
     def keyPressEvent(self, event):
         if event.key() in (Qt.Key_Return, Qt.Key_Enter, Qt.Key_Space):
-
             self.click()
         else:
             super().keyPressEvent(event)
-
-    # def on_click(self):
-        # print("Button clicked!")
 
 
 class TableWidget(QTableWidget):
@@ -26,6 +22,9 @@ class TableWidget(QTableWidget):
         super().__init__(parent, *args, **kwargs)
         self.parent = parent
         self.setEditTriggers(self.NoEditTriggers)
+        self.setSelectionBehavior(QTableWidget.SelectRows)
+        self.resizeColumnsToContents()
+        self.resizeRowsToContents()
     
     def keyPressEvent(self, event):
         if int(event.key()) == 16777218:

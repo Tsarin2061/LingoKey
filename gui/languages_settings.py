@@ -23,7 +23,7 @@ class InputDialog(QDialog):
         okButton = Button("Save", self)
         okButton.clicked.connect(self.save)
 
-        # Розташування компонентів у діалоговому вікні
+        # Positioning components in a dialog box
         layout = QVBoxLayout()
         layout.addWidget(self.from_lang)
         layout.addWidget(self.to_lang)
@@ -89,14 +89,14 @@ class LanguagesWindow(QWidget):
         self.delete_button = Button("Delete", self)
         self.delete_button.clicked.connect(self.delete_row)
 
-        # Розташування таблиці та кнопки у віджеті
+        # Placement of the table and buttons in the widget
         layout = QVBoxLayout()
         layout.addWidget(self.inputButton)
         layout.addWidget(self.table)
         layout.addWidget(self.delete_button)
         self.setLayout(layout)
 
-        # Налаштування вікна
+        # Window settings
         self.setGeometry(300, 300, 400, 250)
         self.setWindowTitle('LingoKey')
 
